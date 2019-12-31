@@ -37,7 +37,7 @@ REPLACE('010-1234-5678','-',' ') AS REPLACE_1, -- '-'대신 ' ' 출력
 REPLACE('010-1234-5678','-') AS REPLACE_2 -- '-' 제거  
 FROM DUAL; -- 임시 결과 확인.
 
-SELECT CONCAT(EMPNO,ENAME), 
+SELECT CONCAT(EMPNO,ENAME),                                                       
 -- 두문자를 합치는 CONCAT EMPNOENAME 출력.                            
 CONCAT(EMPNO,CONCAT(':',ENAME))    
 -- EMPNO:ENAME 출력.                                   
