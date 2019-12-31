@@ -56,3 +56,10 @@ SELECT '[' || TRIM(' _Oracle_ ')||']' AS TRIM,
 '[' || TRIM(BOTH FROM ' _Oracle_ ')||']' AS TRIM_BOTH
 -- '    ' 안의 공백 제거                                                                     
 FROM DUAL;    -- 임시 결과 확인.
+
+SELECT '[' || TRIM('_'FROM'_Oracle_')||']' AS TRIM,
+'[' || LTRIM('_Oracle_')||']' AS LTRIM,  
+'[' || LTRIM('<_Oracle_>','_<')||']' AS LTRIM_2,
+'[' || RTRIM('_Oracle_')||']' AS RTRIM,
+'[' || RTRIM('<_Oracle_>','>_')||']' AS RTRIM_2
+FROM DUAL;
