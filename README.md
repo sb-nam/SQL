@@ -63,3 +63,30 @@ SELECT '[' || TRIM('_'FROM'_Oracle_')||']' AS TRIM,
 '[' || RTRIM('_Oracle_')||']' AS RTRIM,                                            
 '[' || RTRIM('<_Oracle_>','>_')||']' AS RTRIM_2                                       
 FROM DUAL;
+
+SELECT ROUND(1234.5678) AS ROUND, -- 소수점 1번째 반올림 후 출력                                        
+ROUND(1234.5678,0) AS ROUND_0, -- 소수점 1번째 반올림 후 출력                                       
+ROUND(1234.5678,1) AS ROUND_1, -- 소수점 2번째 반올림 후 출력                                
+ROUND(1234.5678,2) AS ROUND_2, -- 소수점 3번째 반올림 후 출력                                    
+ROUND(1234.5678,-1) AS ROUND_MINUS1, -- 1의 자리를 반올림 후 출력                                
+ROUND(1234.5678,-2) AS ROUND_MINUS2 -- 10의 자리를 반올림 후 출력                                  
+FROM DUAL;                                               
+
+SELECT TRUNC(1234.5678) AS TRUNC, -- 소수점 1번째 버림 후 출력                                         
+TRUNC(1234.5678,0) AS TRUNC_0, -- 소수점 1번째 버림 후 출력                               
+TRUNC(1234.5678,1) AS TRUNC_1, -- 소수점 2번째 버림 후 출력                                
+TRUNC(1234.5678,2) AS TRUNC_2, -- 소수점 3번째 버림 후 출력                              
+TRUNC(1234.5678,-1) AS TRUNC_MINUS1, -- 1의 자리를 버림 후 출력                               
+TRUNC(1234.5678,-2) AS TRUNC_MINUS2 -- 10의 자리를 버림 후 출력                                         
+FROM DUAL;
+
+SELECT CEIL(3.14), -- CEIL 가장 가까운 큰 정수 출력                                            
+FLOOR(3.14), -- FLOOR 가장 가까운 작은 정수 출력                                              
+CEIL(-3.14),                                                                                               
+FLOOR(-3.14)                                                                                     
+FROM DUAL;                                                                                             
+
+SELECT MOD(15,6), -- 나머지 값 출력.                                                                       
+MOD(10,2),                                                                                         
+MOD(11,2)                                                                             
+FROM DUAL;
