@@ -48,11 +48,11 @@ SELECT EMPNO || ENAME, EMPNO || ':' || ENAME FROM EMP;
 -- 문자와 문자 사이를 연결해주는 연산자 ||;
 
 SELECT '[' || TRIM(' _Oracle_ ')||']' AS TRIM,                
---  양쪽의 공백 모두 제거
+--  양쪽의 공백 모두 제거                                                                                       
 '[' || TRIM(LEADING FROM ' _Oracle_ ')||']' AS TRIM_LEADING,               
---  왼쪽의 공백 제거
+--  왼쪽의 공백 제거                                                                               
 '[' || TRIM(TRAILING FROM ' _Oracle_ ')||']' AS TRIM_TRAILING,                 
--- 오른쪽의 공백 제거
+-- 오른쪽의 공백 제거                                                                     
 '[' || TRIM(BOTH FROM ' _Oracle_ ')||']' AS TRIM_BOTH
--- '    ' 안의 공백 제거
+-- '    ' 안의 공백 제거                                                                     
 FROM DUAL;    -- 임시 결과 확인.
