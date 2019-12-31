@@ -38,10 +38,10 @@ REPLACE('010-1234-5678','-') AS REPLACE_2 -- '-' 제거
 FROM DUAL; -- 임시 결과 확인.
 
 SELECT CONCAT(EMPNO,ENAME), 
--- 두문자를 합치는 CONCAT EMPNOENAME 출력.
-CONCAT(EMPNO,CONCAT(':',ENAME)) 
--- EMPNO:ENAME 출력.
-FROM EMP WHERE ENAME = 'SMITH'; 
+-- 두문자를 합치는 CONCAT EMPNOENAME 출력.                            
+CONCAT(EMPNO,CONCAT(':',ENAME))    
+-- EMPNO:ENAME 출력.                                   
+FROM EMP WHERE ENAME = 'SMITH';    
 -- ENAME이 스미스 출력.
 
 SELECT EMPNO || ENAME, EMPNO || ':' || ENAME FROM EMP;
