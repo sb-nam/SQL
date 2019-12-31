@@ -19,7 +19,9 @@ select job,substr(job,1,2),substr(job,3,2),substr(job,5) from emp;
 -- 잡의 1번째 부터 2개 출력, 3번째 부터 2개 출력 , 5번째 부터 다 출력.
 
 select job, substr(job, -length(job)), -- 전부 출력.
+
             substr(job, -length(job),2), -- 앞 2글자 출력.
+            
             substr(job,-3) from emp; -- 뒤 3글자 출력 .        
 
 select instr('hello, oracle!','l')as instr_1, --첫번째 만나는 l의 위치   
