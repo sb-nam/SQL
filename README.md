@@ -2,7 +2,7 @@
 
 select Ename,upper(ename),lower(ename),initcap(ename) from emp; -- 대소문자 구분
 
-select * from emp where upper(ename) like upper('%smith%'); 
+select * from emp where upper(ename) like upper('%smith%');                                       
 select * from emp where upper(ename)=upper('smith'); -- 대문자로 이름 변경
 
 select initcap(ename) from emp; -- 앞 글자만 대문자
@@ -46,3 +46,13 @@ FROM EMP WHERE ENAME = 'SMITH';
 
 SELECT EMPNO || ENAME, EMPNO || ':' || ENAME FROM EMP;
 -- 문자와 문자 사이를 연결해주는 연산자 ||;
+
+SELECT '[' || TRIM(' _Oracle_ ')||']' AS TRIM,                
+--  양쪽의 공백 모두 제거
+'[' || TRIM(LEADING FROM ' _Oracle_ ')||']' AS TRIM_LEADING,               
+--  왼쪽의 공백 제거
+'[' || TRIM(TRAILING FROM ' _Oracle_ ')||']' AS TRIM_TRAILING,                 
+-- 오른쪽의 공백 제거
+'[' || TRIM(BOTH FROM ' _Oracle_ ')||']' AS TRIM_BOTH
+-- '    ' 안의 공백 제거
+FROM DUAL;    -- 임시 결과 확인.
