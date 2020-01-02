@@ -90,3 +90,60 @@ SELECT MOD(15,6), -- 나머지 값 출력.
 MOD(10,2),                                                                                         
 MOD(11,2)                                                                             
 FROM DUAL;
+
+## 날짜 데이터를 다루는 날짜 함수
+
+ADD_MONTHS  : 몇 개월 이후 날짜                                                                   
+MONTHS_BETWEEN : 두 날짜 간의 개월수 차이                                                     
+NEWT_DAY : 돌아오는 요일                                                                 
+LAST_DAY : 달의 마지막 날짜                                                     
+ROUND, TURNC : 날짜의 반올림 , 버림                                                       
+
+select * from emp where upper(ename) like upper('%s%');
+SELECT SYSDATE AS NOW, SYSDATE+1 AS TOMORROW FROM DUAL;
+SELECT ADD_MONTHS(SYSDATE,12) AS MON FROM DUAL;
+
+SELECT SYSDATE AS NOW, -- SYSDATE 현재 날짜.                                                      
+SYSDATE -1 AS YESTERDAY, --SYSDATE -1 음수만큼 앞 날자 출력                                          
+SYSDATE +1 AS TOMORROW -- SYSDATE +1 양수만큼 앞 날자 출력                                        
+FROM DUAL; -- 임시로 결과 확인                                                  
+
+SELECT SYSDATE, ADD_MONTHS(SYSDATE,-3) FROM DUAL;                                           
+-- 월 단위로 음수만큼 뒤로 간다.       
+
+SELECT EMPNO,ENAME,HIREDATE, ADD_MONTHS(HIREDATE,120) AS WORK10YEAR FROM EMP;                                      
+-- HIREDATE를 WORK10YEAR 이름으로 +120개월 출력                                      
+ 
+SELECT EMPNO,HIREDATE,SYSDATE FROM EMP WHERE ADD_MONTHS(HIREDATE,460)>SYSDATE;                            
+-- SYSDATE로 부터 HIREDATE가 460개월 안되는 EMPNO 출력                  
+
+SELECT SYSDATE,ADD_MONTHS(SYSDATE,6) FROM DUAL;                                                  
+-- 오늘부터 6개월 뒤에 날자 출력                       
+
+SELECT EMPNO,ENAME,HIREDATE,SYSDATE,                                                                      
+MONTHS_BETWEEN(HIREDATE,SYSDATE) AS MONTHS1,                                                                  
+MONTHS_BETWEEN(SYSDATE, HIREDATE) AS MONTHS2,                                                        
+TRUNC(MONTHS_BETWEEN(SYSDATE,HIREDATE)) AS MONTH3                                                
+FROM EMP;                                                                                  
+-- 두 날짜 데이터 간의 날짜 차이를 개월수로 계산하여 출력.                                               
+
+SELECT SYSDATE,                                                                       
+NEXT_DAY(SYSDATE,'금'),                                                                         
+LAST_DAY(SYSDATE)                                                                          
+FROM DUAL;                                                                 
+
+SELECT SYSDATE,                                                                             
+ROUND(SYSDATE-10,'CC') AS FORMAT_CC,                                                                   
+ROUND(SYSDATE-10,'YYYY') AS FORMAT_YYYY,                                                               
+ROUND(SYSDATE-10,'Q') AS FORMAT_Q,                                                                      
+ROUND(SYSDATE-10,'DDD') AS FORMAT_DDD,                                                                        
+ROUND(SYSDATE-10,'HH') AS FORMAT_HH                                                                           
+FROM DUAL;
+
+SELECT SYSDATE,                                                                                      
+TRUNC(SYSDATE-10,'CC') AS FORMAT_CC,                                                                 
+TRUNC(SYSDATE-10,'YYYY') AS FORMAT_YYYY,                                                                      
+TRUNC(SYSDATE-10,'Q') AS FORMAT_Q,                                                                        
+TRUNC(SYSDATE-10,'DDD') AS FORMAT_DDD,                                                                    
+TRUNC(SYSDATE-10,'HH') AS FORMAT_HH                                                                           
+FROM DUAL;      
