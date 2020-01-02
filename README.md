@@ -148,4 +148,88 @@ TRUNC(SYSDATE-10,'Q') AS FORMAT_Q,
 TRUNC(SYSDATE-10,'DDD') AS FORMAT_DDD,                                                                    
 TRUNC(SYSDATE-10,'HH') AS FORMAT_HH                                                                           
 FROM DUAL;      
+
+--## 자료형을 변환하는 형 변환 함수
+
+--TO_CHAR : 숫자 또는 날짜 데이터를 문자 데이터로 변환
+--TO_NUMBER : 문자 데이터를 숫자 데이터로 변환
+--TO_DATE :  문자 데이터를 날짜 데이터로 변환
+
+SELECT EMPNO,ENAME,EMPNO+'500' FROM EMP WHERE ENAME = 'SMITH';
+--숫자형 문자를 자동형 변환을 하여 기존 숫자에 더해줌
+
+SELECT 'ABCD'+EMPNO,EMPNO FROM EMP WHERE ENAME = 'JAMES';
+-- 문자형 문자를 숫자에 더하기 때문에 형변환이 일어나지 않고 오류가 발생.
+
+SELECT TO_CHAR(SYSDATE,'YYYY/MM/DD HH24:MI:SS')AS 현재날짜시간 FROM DUAL;
+-- 2020/월/날짜 시:분:초 출력
+
+SELECT SYSDATE,
+TO_CHAR(SYSDATE,'MM')AS MM,                                                         
+TO_CHAR(SYSDATE,'MON')AS MON,                                                                
+TO_CHAR(SYSDATE,'MONTH')AS MONTH,-- 월                                                            
+TO_CHAR(SYSDATE,'DD')AS DD,                                                                
+TO_CHAR(SYSDATE,'DY')AS DY,                                                       
+TO_CHAR(SYSDATE,'DAY')AS DAY -- 일                                                               
+FROM DUAL;
+
+-- 9는 숫자의 한자리 의미 빈공간 생성
+-- 0은 빈자리를 0으로 채움
+-- $ 달러 표시 후 출력
+-- L 지역 화폐단위 표시
+-- . 소수점 표시
+-- , 천단위 기호 표시
+
+SELECT SAL,
+TO_CHAR(SAL,'$999,999') AS SAL_$,
+TO_CHAR(SAL,'L999,999') AS SAL_L,
+TO_CHAR(SAL,'999,999.00') AS SAL_1,
+TO_CHAR(SAL,'000,999,999,00') AS SAL_2,
+TO_CHAR(SAL,'0009999999,999') AS SAL_3,
+TO_CHAR(SAL,'999,999,999,000') AS SAL_4
+FROM EMP;
+
+SELECT TO_NUMBER('1,300','9999')-TO_NUMBER('1,500','9999') FROM DUAL;
+
+SELECT TO_DATE('49/12/10','YY/MM/DD') AS YY_YEAR_49,
+TO_DATE('49/12/10','RR/MM/DD') AS RR_YEAR_49,
+TO_DATE('49/12/10','YY/MM/DD') AS YY_YEAR_50,
+TO_DATE('49/12/10','RR/MM/DD') AS RR_YEAR_50,
+TO_DATE('49/12/10','YY/MM/DD') AS YY_YEAR_51,
+TO_DATE('49/12/10','RR/MM/DD') AS RR_YEAR_51
+FROM DUAL;
+
+-- ## NULL 처리 함수
+
+--NVL(NULL인지 검사할 데이터 , NULL일경우 반환할 데이터)
+--EX) NVL(COMM,0)
+--NVL2(NULL인지 검사할 데이터 , NULL이 아닐경우 반환할 데이터 , NULL일겨우 반환할 데이터)
+--EX) NVL(COMM,SAL*12+COMM,SAL*12) *계산식을 넣어도 된다.*
+
+SELECT EMPNO,ENAME,SAL,COMM,SAL+COMM,NVL(COMM,0),SAL+NVL(COMM,0) FROM EMP;
+
+SELECT EMPNO,ENAME,JOB,SAL,
+DECODE(JOB,   -- 조건식
+      'MANAGER',SAL*1.1,  -- 조건식에 일치한다면 SAL * 1.1 진행
+      'SLAESMAN',SAL*1.05, -- 조건식에 일치한다면 SAL * 1.05 진행
+      'ANALYST',SAL,   -- 조건식에 일치한다면 SAL 진행
+      SAL*1.03)   -- 조건식에 나머지에 SAL * 1.03 진행
+AS UPSAL FROM EMP;
+
+SELECT EMPNO,ENAME,JOB,SAL,
+CASE JOB -- 조건식
+WHEN 'MANAGER' THEN SAL * 1.1    -- 조건식에 일치한다면 SAL * 1.1 진행
+WHEN 'SALESMAN' THEN SAL * 1.05   -- 조건식에 일치한다면 SAL * 1.05 진행
+WHEN 'ANALYST' THEN SAL           -- 조건식에 일치한다면 SAL 진행
+ELSE SAL * 1.03                   -- 조건식에 나머지에 SAL * 1.03 진행
+END AS UPSAL FROM EMP;
+
+SELECT EMPNO,ENAME,COMM,
+CASE
+WHEN COMM IS NULL THEN '해당사항 없음'
+WHEN COMM = 0 THEN '수업없음'
+WHEN COMM > 0 THEN '수당:'||COMM
+END AS COMM_TEXT
+FROM EMP;
 ```
+
