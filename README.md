@@ -149,11 +149,11 @@ TRUNC(SYSDATE-10,'DDD') AS FORMAT_DDD,
 TRUNC(SYSDATE-10,'HH') AS FORMAT_HH                                                                           
 FROM DUAL;      
 
---## 자료형을 변환하는 형 변환 함수
+## 자료형을 변환하는 형 변환 함수
 
---TO_CHAR : 숫자 또는 날짜 데이터를 문자 데이터로 변환
---TO_NUMBER : 문자 데이터를 숫자 데이터로 변환
---TO_DATE :  문자 데이터를 날짜 데이터로 변환
+TO_CHAR(데이터) : 숫자 또는 날짜 데이터를 문자 데이터로 변환
+TO_NUMBER(데이터) : 문자 데이터를 숫자 데이터로 변환
+TO_DATE(데이터) :  문자 데이터를 날짜 데이터로 변환
 
 SELECT EMPNO,ENAME,EMPNO+'500' FROM EMP WHERE ENAME = 'SMITH';
 --숫자형 문자를 자동형 변환을 하여 기존 숫자에 더해줌
@@ -199,7 +199,7 @@ TO_DATE('49/12/10','YY/MM/DD') AS YY_YEAR_51,
 TO_DATE('49/12/10','RR/MM/DD') AS RR_YEAR_51
 FROM DUAL;
 
--- ## NULL 처리 함수
+## NULL 처리 함수
 
 --NVL(NULL인지 검사할 데이터 , NULL일경우 반환할 데이터)
 --EX) NVL(COMM,0)
