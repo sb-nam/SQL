@@ -2,7 +2,7 @@
 
 select Ename,upper(ename),lower(ename),initcap(ename) from emp; -- 대소문자 구분
 
-select * from emp where upper(ename) like upper('%smith%');                                       
+select * from emp where upper(ename) like upper('%smith%');                                                                       
 select * from emp where upper(ename)=upper('smith'); -- 대문자로 이름 변경
 
 select initcap(ename) from emp; -- 앞 글자만 대문자
@@ -99,9 +99,9 @@ NEWT_DAY : 돌아오는 요일
 LAST_DAY : 달의 마지막 날짜                                                     
 ROUND, TURNC : 날짜의 반올림 , 버림                                                       
 
-select * from emp where upper(ename) like upper('%s%');
-SELECT SYSDATE AS NOW, SYSDATE+1 AS TOMORROW FROM DUAL;
-SELECT ADD_MONTHS(SYSDATE,12) AS MON FROM DUAL;
+select * from emp where upper(ename) like upper('%s%');                                              
+SELECT SYSDATE AS NOW, SYSDATE+1 AS TOMORROW FROM DUAL;                                               
+SELECT ADD_MONTHS(SYSDATE,12) AS MON FROM DUAL;                                             
 
 SELECT SYSDATE AS NOW, -- SYSDATE 현재 날짜.                                                      
 SYSDATE -1 AS YESTERDAY, --SYSDATE -1 음수만큼 앞 날자 출력                                          
