@@ -94,11 +94,11 @@ FROM DUAL;
 
 ## 날짜 데이터를 다루는 날짜 함수
 
-ADD_MONTHS  : 몇 개월 이후 날짜                                                                   
-MONTHS_BETWEEN : 두 날짜 간의 개월수 차이                                                     
-NEWT_DAY : 돌아오는 요일                                                                 
-LAST_DAY : 달의 마지막 날짜                                                     
-ROUND, TURNC : 날짜의 반올림 , 버림                                                       
+ADD_MONTHS(날짜,개월)  : 몇 개월 이후 날짜                                                                   
+MONTHS_BETWEEN(날짜,날짜) : 두 날짜 간의 개월수 차이                                                     
+NEWT_DAY(날짜,요일) : 돌아오는 요일                                                                 
+LAST_DAY(날짜) : 달의 마지막 날짜                                                     
+ROUND, TURNC(숫자,위치) : 날짜의 반올림 , 버림                                                       
 
 select * from emp where upper(ename) like upper('%s%');                                              
 SELECT SYSDATE AS NOW, SYSDATE+1 AS TOMORROW FROM DUAL;                                               
