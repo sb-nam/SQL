@@ -1,5 +1,6 @@
 # SQL
 
+```sql
 select Ename,upper(ename),lower(ename),initcap(ename) from emp; -- 대소문자 구분
 
 select * from emp where upper(ename) like upper('%smith%');                                                                       
@@ -147,3 +148,4 @@ TRUNC(SYSDATE-10,'Q') AS FORMAT_Q,
 TRUNC(SYSDATE-10,'DDD') AS FORMAT_DDD,                                                                    
 TRUNC(SYSDATE-10,'HH') AS FORMAT_HH                                                                           
 FROM DUAL;      
+```
