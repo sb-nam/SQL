@@ -91,9 +91,10 @@ SELECT MOD(15,6), -- 나머지 값 출력.
 MOD(10,2),                                                                                         
 MOD(11,2)                                                                             
 FROM DUAL;
+```
 
 ## 날짜 데이터를 다루는 날짜 함수
-
+```SQL
 ADD_MONTHS(날짜,개월)  : 몇 개월 이후 날짜                                                                   
 MONTHS_BETWEEN(날짜,날짜) : 두 날짜 간의 개월수 차이                                                     
 NEWT_DAY(날짜,요일) : 돌아오는 요일                                                                 
@@ -148,9 +149,10 @@ TRUNC(SYSDATE-10,'Q') AS FORMAT_Q,
 TRUNC(SYSDATE-10,'DDD') AS FORMAT_DDD,                                                                    
 TRUNC(SYSDATE-10,'HH') AS FORMAT_HH                                                                           
 FROM DUAL;      
+```
 
 ## 자료형을 변환하는 형 변환 함수
-
+```SQL
 TO_CHAR(데이터) : 숫자 또는 날짜 데이터를 문자 데이터로 변환
 TO_NUMBER(데이터) : 문자 데이터를 숫자 데이터로 변환
 TO_DATE(데이터) :  문자 데이터를 날짜 데이터로 변환
@@ -198,9 +200,10 @@ TO_DATE('49/12/10','RR/MM/DD') AS RR_YEAR_50,
 TO_DATE('49/12/10','YY/MM/DD') AS YY_YEAR_51,
 TO_DATE('49/12/10','RR/MM/DD') AS RR_YEAR_51
 FROM DUAL;
+```
 
 ## NULL 처리 함수
-
+```SQL
 --NVL(NULL인지 검사할 데이터 , NULL일경우 반환할 데이터)
 --EX) NVL(COMM,0)
 --NVL2(NULL인지 검사할 데이터 , NULL이 아닐경우 반환할 데이터 , NULL일겨우 반환할 데이터)
