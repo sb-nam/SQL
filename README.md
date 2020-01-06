@@ -300,3 +300,102 @@ ORDER BY DEPTNO,JOB; -- 정열을 시키는 ORDER BY
 SELECT DEPTNO, JOB,AVG(SAL) FROM EMP GROUP BY DEPTNO,JOB HAVING AVG(SAL) >= 500
 ORDER BY DEPTNO,JOB; -- SAL의 평균이 500이상인 부서,직업 출력
 ```
+
+## rollup(a, b, c) 함수
+```sql
+--1. a , b, c 그룹에 해당하는 결과 출력
+--2. a, b 그룹에 해당하는 결과 출력
+--3. a 그룹에 해당하는 결과 출력
+-- 전체 데이터 결과 출력
+
+select deptno,job,count(*),max(sal),sum(sal),avg(sal) 
+from emp -- select~ from 순서 대로 컬럼 이름 출력
+group by deptno,job -- deptno , job 순서로 그룹화
+order by deptno,job; -- deptno , job 순서대로 정렬
+
+select deptno, job, count(*),max(sal),sum(sal),avg(sal)
+from emp -- select~ from 순서 대로 컬럼 이름 출력
+group by rollup(deptno,job);  -- deptno 기준으로 정렬
+--동일하게 출력 후 부서마지막 마다 총 데이터 결과 출력
+
+select deptno, job, count(*),max(sal),sum(sal),avg(sal)
+from emp -- select~ from 순서 대로 컬럼 이름 출력
+group by job ,rollup(deptno); -- job 기준으로 정렬, deptno 전체 출력
+
+select deptno, job, count(*),max(sal),sum(sal),avg(sal)
+from emp
+group by deptno,rollup(job); -- deptno 기준으로 정렬, job 전체
+```
+## grouping sets함수
+```sql
+-- grouping sets(a,b) / a는 a 끼리 b는 b끼리 한번에 출력
+select deptno, job, count(*),max(sal),sum(sal),avg(sal)
+from emp
+group by grouping sets(deptno,job) --deptno 출력 후 job 출력
+order by deptno,job;
+
+
+select * from emp,dept --from 절에 테이블 여러개 선언
+where emp.deptno = dept.deptno -- where 설정 안하면 중복 값 출력
+order by empno; -- empno 기준으로 정렬
+```
+## 테이블의 별칭 설정
+```sql
+select * from emp E,dept D -- 테이블 별칭 , 테이블1 별칭1
+where E.deptno = D.deptno -- 중복 제거를 위한 식
+order by empno;
+
+select E.empno,E.ename, D.deptno,D.dname,D.loc  -- 테이블 별칭을 먼저
+from emp E,DEPT D -- 테이블 별칭 생성
+where E.deptno = D.deptno -- 중복 제거
+order by D.deptno,E.deptno;
+
+select * from salgrade; -- salgrade 필드 보기.
+
+select * from emp E, salgrade S -- 별칭 생성
+where E.sal between S.losal and S.hisal; -- 별칭을 이용한 조건식
+
+select * from emp;
+```
+## 자체 조인, 외부 조인
+```sql
+select E1.empno, E1.ename, E1.mgr,
+E2.empno as mgr_empno,
+E2.ename as mgr_ename
+from emp E1, emp E2
+where E1.mgr = E2.empno
+order by E1.empno;
+
+select E1.empno, E1.ename, E1.mgr,
+E2.empno as mgr_empno,
+E2.ename as mgr_ename
+from emp E1, emp E2
+where E1.mgr = E2.empno(+)
+order by E1.empno;
+
+select E1.empno, E1.ename, E1.mgr,
+E2.empno as mgr_empno,
+E2.ename as mgr_ename
+from emp E1, emp E2
+where E1.mgr(+) = E2.empno
+order by E1.empno;
+
+select E.empno, E.ename, E.job, E.mgr, E.hiredate, E.sal, E.comm, deptno, d.dname, d.loc
+from emp E natural join dept D
+order by deptno, E.empno;
+
+select e.empno, e.ename, e.job, e.mgr, e.hiredate, e.sal, e.comm, deptno, d.dname, d.loc
+from emp e join dept d using (deptno)
+where sal >=3000
+order by deptno, e.empno;
+
+select e.empno, e.ename, e.job, e.mgr, e.hiredate, e.sal, e.comm, e.deptno, d.dname, d.loc
+from emp e join dept d on(e.deptno = d.deptno)
+where sal <=3000
+order by e.deptno, empno;
+
+select e1.empno, e1.ename, e1.mgr, e2.empno as mgr_empno, e2.ename as mgr_ename
+from emp e1 join emp e2 on (e1.mgr = e2.empno)
+order by e1.deptno;
+
+```
