@@ -399,3 +399,94 @@ from emp e1 join emp e2 on (e1.mgr = e2.empno)
 order by e1.deptno;
 
 ```
+
+## 서브 쿼리 
+```sql
+-- select from where  / 조회 할 열 , 조회 할 테이블, 조건식
+-- select from where ( select from where) <- 서브 쿼리
+select hiredate  from emp where ename = 'TURNER'; 
+
+select * from emp where sal > (select sal from emp where ename = 'JONES');
+select * from emp where sal > 2975; -- 위에와 같은 의미
+-- JONES보다 sal 이 많은 사람을 출력
+
+select * from emp where comm > (select comm from emp where ename = 'ALLEN');
+select * from emp where comm > 300; -- 위와 같은 의미
+--ALLEN 보다 comm이 많은 사람 출력 
+
+select * from emp where hiredate < (select hiredate from emp where ename = 'TURNER');
+select * from emp where hiredate < '81/09/08'; -- 같은 의미
+--TURNER보다 빨리 입사한 사람 출력
+
+select e.empno, e.ename, e.job, e.sal, d.deptno, d. dname, d.loc
+from emp E join dept D on(e.deptno = d.deptno)
+where e.deptno = 20
+and e.sal > (select avg(sal) from emp);
+--20번 부서에서 평균보다 높은 급여 받는 사람 출력
+```
+## 실행결과가 여러개인 다중행 서브쿼리
+```sql
+-- in( a, b , c, d) 괄호안에 하나라도 일치하면 true / 자바의 or /
+-- any,some = any (select max(sal) from emp group by deptno);
+--          = some (select max(sal) from emp group by deptno);
+-- = 이 붙을 경우 in 과 의미가 같다.
+-- all 조건을 모두 만족 해야 한다. / any, some과 결과 반대
+-- exists 조건이 true면 모두 참/ 결과 존재 조건 확인시 자주 쓰임
+
+select * from emp where deptno in(20,30);
+-- deptno가 20 이나 30 인 경우 모두 출력 (자바의 or)
+
+select * from emp where sal in (select max(sal) from emp group by deptno);
+--부서에서 가장 높은 급여를 받는 사람 전체 정보 출력
+
+select deptno,max(sal) from emp group by deptno ;
+--부서에서 가장 높은 급여 출력
+
+select * from emp where sal = any (select max(sal) from emp group by deptno);
+select * from emp where sal = some (select max(sal) from emp group by deptno);
+--부서에서 가장 높은 급여를 받는 사람 전체 정보 출력 , in 과 같다.
+
+select * from emp where sal > any (select sal from emp where deptno = 30)order by sal,empno;
+-- 가장 작은 수 기준
+select * from emp where sal < some (select sal from emp where deptno = 30)order by sal,empno;
+--가장 큰 수 기준
+-- 크거나 작다의 부등호를 사용할 경우 가장 크거나 가장 작은 수의 기준으로 정렬함 (부등호 반대).
+
+select * from emp where sal > all (select sal from emp where deptno = 30)order by sal,empno;
+-- 조건에서 가장 큰 수 기준
+select * from emp where sal > all (select sal from emp where deptno = 30)order by sal,empno;
+-- 조건에서 가장 작은수 기준 / any,some 과 반대
+select * from emp where sal < all (select sal from emp where deptno = 30)order by sal,empno;
+-- 조건에서 가장 큰 수 기준 / any,some 과 반대
+
+select * from emp where hiredate < all (select hiredate from emp where deptno = 10);
+-- 부서 10 번에서 가장 작은 날짜 기준으로 비교
+
+select * from emp where exists (select dname from dept where deptno=10);
+select * from emp where exists (select dname from dept where deptno=50);
+-- 조건이 참이면 모두 출력, 참이 아니면 출력 안함
+
+select * from emp where (deptno,sal) in (select deptno,max(sal) from emp group by deptno);
+-- deptno와 sal 에서 부서 번호,가장 높은급여를 emp 로 부터 deptno 그룹에서 출력
+```
+## From절에 사용하는 서브쿼리와 With절
+```sql
+select E10.empno, E10.ename, E10.deptno, D.dname, D.loc -- 조건
+from (select * from emp where deptno = 10) E10, -- 별칭
+(select * from dept) D -- 별칭
+where E10.deptno = D.deptno; -- 부서의 데이터 통일
+-- 같은 의미
+with E10 as (select * from emp where deptno = 10),
+D as (select * from dept)
+select E10.empno, E10.ename, E10.deptno, D.dname, D.loc
+from E10, D
+where E10.deptno = d.deptno;
+
+select empno, ename, job, sal, 
+(select grade from salgrade where e.sal between losal and hisal) 
+as salgrade, deptno,
+(select dname from dept where e.deptno = dept.deptno) as dname
+from emp e;
+
+select dname from dept;
+```
