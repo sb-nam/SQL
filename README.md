@@ -491,7 +491,7 @@ from emp e;
 select dname from dept;
 ```
 ## 데이터를 조작, 정의, 제어하는 SQL배우기
--`테이블 생성
+- **테이블 생성
 ```sql
 create table dept_temp as select * from dept;
 -- dept_temp 테이블을 만들고, select * from dept를 복사
@@ -502,7 +502,7 @@ create table dept_temp2 as select * from dept;
 create table emp_temp2 as select * from emp;
 ```
 ## 데이터 조작(data manipulation language) DML
--`데이터 추가 insert, 데이터 수정 update, 데이터 삭제 delete
+- **데이터 추가 insert, 데이터 수정 update, 데이터 삭제 delete
 -insert into 테이블명 ( 필드1,필드2)values ( 값1,값2);
 ```sql
 insert into dept_temp(deptno,dname,loc) values(50,'database','seoul');
@@ -517,8 +517,8 @@ select e.empno, e.ename, e.job, e.mgr, e.hiredate, e.sal, e.comm, e.deptno from 
 where E.sal between s.losal and s.hisal and s.grade = 1;
 -- grade가 1인 사원만 emp_temp에 추가
 ```
--`update 테이블명 set 필드 = 값 where 조건;
--`조건에 해당하는 레코드의 필드를 값으로 수정.
+- **update 테이블명 set 필드 = 값 where 조건;
+- **조건에 해당하는 레코드의 필드를 값으로 수정.
 ```sql
 update dept_temp2 set loc = 'SUWON';
 -- loc를 suwon으로 dept_temp2가 전체 변경
@@ -532,7 +532,7 @@ update dept_temp2 set loc ='seoul' where deptno = (select deptno from dept_temp2
 -- deptno 가 (select 조건)인 사원을 loc가 'seoul'로 변경
 
 ```
--`delete from 테이블 where 필드 = 키값; - 해당 키값만 삭제
+- **delete from 테이블 where 필드 = 키값; - 해당 키값만 삭제
 ```sql
 delete from emp_temp2 where job ='MANAGER';
 -- job이 manager 삭제
