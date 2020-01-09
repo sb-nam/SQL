@@ -581,7 +581,7 @@ select * from emp_temp2;
  select * from dept_tcl;
  select * from dept;
  COMMIT;
- ```
+ 
  ## 세션과 읽기 일관성의 의미
  **세션이란?
  -데이터베이스 접속을 시작으로 접속을 종료하기까지 전체 기간
@@ -591,3 +591,4 @@ select * from emp_temp2;
  
  ## 수정중인 데이터 접근을 막는 LOCK
  -LOCK은 트랜잭션이 완료(COMMIT,ROLLBACK)되기 전 까지 다른세션에서의 접근을 막는다.
+```
