@@ -557,3 +557,37 @@ select * from emp_temp2;
 
 -- -데이터 제어(data control language) DCL
 ```
+
+ ## 하나의 단위로 데이터를 처리하는 트랜잭션
+ **TCL(Transaction Control Language)
+ 트랜잭션
+ ```sql
+ create table dept_tcl as select * from dept;
+ 
+ insert into dept_tcl values(50, 'database','seoul');
+ 
+ update dept_tcl set loc = 'busan' where deptno = 40;
+ 
+ delete from dept_tcl where dname = 'RESEARCH';
+ 
+ insert into dept_tcl values(50, 'NETWORK','SEOUL');
+ 
+ update dept_tcl set loc = 'BUSAN' where deptno = 20;
+ update dept_tcl set loc = 'SEOUL' where deptno = 30;
+ 
+ delete from dept_tcl where DEPTNO =  40;
+ 
+ ROLLBACK;
+ select * from dept_tcl;
+ select * from dept;
+ COMMIT;
+ ```
+ ## 세션과 읽기 일관성의 의미
+ **세션이란?
+ -데이터베이스 접속을 시작으로 접속을 종료하기까지 전체 기간
+ -하나의 세션에는 여러 개의 트랜잭션이 존재
+ -도스창, SQL DEVELOPER등 DB를 다루는 하나의 세션이라고 부른다.
+ -각 세션은 커밋을 하기 전까지 서로에게 영향을 주지 않는다.
+ 
+ ## 수정중인 데이터 접근을 막는 LOCK
+ -LOCK은 트랜잭션이 완료(COMMIT,ROLLBACK)되기 전 까지 다른세션에서의 접근을 막는다.
