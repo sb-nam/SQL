@@ -566,6 +566,43 @@ select * from emp_temp2;
 -- 4. 테이블 이름은 문자,숫자,$ ,#, _ 의 특수문자를 사용할수 있다.
 -- 5. SQL 키워드는 테이블 이름으로 사용할 수 없다.
 
+--데이터 정의어
+--데이터베이스 데이터를 보관하고 관리하기 위해 제공되는 여러객체의 생성,변경,삭제 관련 기능을 수행합니다.
+--**데이터 정의어는 명령어를 실행하자마자 자동 commit이 된다.
+--데이터 정의어는 create, alter, drop등의 명령어로 구성된다.
+--테이블 생성 규칙 
+-- 1. 테이블 이름은 문자로 시작해야 한다.
+-- 2. 테이블 이름은 30byte 이하여야 한다.
+-- 3. 같은 사용자 소유의 테이블 이름은 중복될 수 없다.
+-- 4. 테이블 이름은 문자,숫자,$ ,#, _ 의 특수문자를 사용할수 있다.
+-- 5. SQL 키워드는 테이블 이름으로 사용할 수 없다.
+
+CREATE TABLE EMP_DDL(
+EMPNO NUMBER(4),
+ENAME VARCHAR2(10),
+JOB VARCHAR2(9),
+MGR NUMBER(4),
+HIREDATE DATE,
+SAL NUMBER(7,2),
+COMM NUMBER(7,2),
+DEPTNO NUMBER(2)
+);
+DESC EMP_DDL;
+--모든 열의 자료형을 각각 정의하여 새 테이블 생성.
+
+CREATE TABLE DEPT_DDL AS SELECT * FROM DEPT;
+DESC DEPT_DDL;
+SELECT * FROM DEPT_DDL;
+-- 기존 테이블의 열 구조와 데이터를 복사하여 새 테이블 생성.
+
+CREATE TABLE EMP_DDL_30 AS SELECT * FROM EMP WHERE DEPTNO = 30;
+SELECT * FROM EMP_DDL_30;
+--다른 테이블의 일부를 복사하여 테이블 생성하기.
+
+CREATE TABLE EMPDEPT_DDL AS SELECT E.EMPNO, E.ENAME, E.JOB, E.MGR, E.HIREDATE, E.SAL, E.COMM, D.DEPTNO, D.DNAME, D.LOC
+FROM EMP E, DEPT D WHERE 1 != 1;
+SELECT * FROM EMPDEPT_DDL;
+--기존 테이블의 열 구조만 복사하여 생성하기.
 
 ```
  ## 데이터 제어(data control language) DCL
