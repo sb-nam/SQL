@@ -552,12 +552,24 @@ select * from dept_temp2;
 select * from emp_temp2;
 
 -- drop table 테이블명= 테이블 삭제
-
--- -데이터 정의(data definition language) DDL
-
--- -데이터 제어(data control language) DCL
 ```
+ ## 데이터 정의(data definition language) DDL
+```sql
+--데이터 정의어
+--데이터베이스 데이터를 보관하고 관리하기 위해 제공되는 여러객체의 생성,변경,삭제 관련 기능을 수행합니다.
+--**데이터 정의어는 명령어를 실행하자마자 자동 commit이 된다.
+--데이터 정의어는 create, alter, drop등의 명령어로 구성된다.
+--테이블 생성 규칙 
+-- 1. 테이블 이름은 문자로 시작해야 한다.
+-- 2. 테이블 이름은 30byte 이하여야 한다.
+-- 3. 같은 사용자 소유의 테이블 이름은 중복될 수 없다.
+-- 4. 테이블 이름은 문자,숫자,$ ,#, _ 의 특수문자를 사용할수 있다.
+-- 5. SQL 키워드는 테이블 이름으로 사용할 수 없다.
 
+
+```
+ ## 데이터 제어(data control language) DCL
+ 
  ## 하나의 단위로 데이터를 처리하는 트랜잭션
  **TCL(Transaction Control Language)
  트랜잭션
