@@ -685,3 +685,58 @@ DROP TABLE EMP_HW;  -- EMP_HW 삭제
  ## 수정중인 데이터 접근을 막는 LOCK
  -LOCK은 트랜잭션이 완료(COMMIT,ROLLBACK)되기 전 까지 다른세션에서의 접근을 막는다.
 ```
+## 데이터베이스를 위한 데이터 사전
+```sql
+select * from dictionary; -- 데이터 사전의 모든정보 보기
+SELECT TABLE_NAME FROM USER_TABLES;
+--현재 접속 계정 사용자가 소유한 계정 정보확인.( USER_*****)
+SELECT * FROM DBA_TABLES;
+-- 데이터베이스 관리를 위한 정보(DBA_*****) , SYSTEM,SYS사용자만 열람가능
+select owner,table_name from all_tables where owner ='SCOTT';
+-- OWNER 테이블을 소유한 사용자( ALL_TABLES에만 존재)
+-- SCOTT 계정이 사용할 수 있는 객체 출력 ( FROM ALL_TABLES)
+```
+## 더 빠른 검색을 위한 인덱스
+```sql
+SELECT * FROM USER_INDEXES; 
+-- 현재 접속 계정의 인덱스 정보 출력
+SELECT * FROM USER_IND_COLUMNS;
+-- 현재 접속 계정의 인덱스 컬럼 정보 출력
+CREATE INDEX IDX ON EMP(SAL);
+-- CREATE INDEX 인덱스 이름 ON 테이블 이름 (
+-- 열이름1 ASC OR DESC,
+-- 열이름2 ASC OR DESC,
+-- ....);
+-- 인덱스 생성
+DROP INDEX IDX;
+--인덱스 삭제
+```
+## 테이블처럼 사용하는 뷰
+```sql
+-- 뷰 생성 권한은 SYSTEM 계정에 접속한 다음 SCOTT계정에 부여해 줘야한다..
+-- SQLPLUS /SYSTEM/비번
+CREATE VIEW VW_EMP20 AS (SELECT EMPNO,ENAME,JOB,DEPTNO FROM EMP WHERE DEPTNO = 20);
+-- EMP 테이블에 있는 DEPTNO = 20번인 부서를 VW_EMP20   VIEW로 생성
+SELECT * FROM USER_VIEWS;
+-- VIEW를 출력
+SELECT VIEW_NAME,TEXT_LENGTH,TEXT FROM USER_VIEWS;
+-- VIEW에 이름, 크기, 텍스트 출력
+SELECT * FROM VW_EMP20;
+--VW_EMP20 정보 출력;
+DROP VIEW VW_EMP20;
+-- VW_EMP20 삭제
+```
+## 인라인 뷰
+```sql
+SELECT ROWNUM, E.* FROM EMP E ;
+-- 테이블이 조회된 순서대로 번호를 주는 ROWNUM
+SELECT ROWNUM, E.* FROM EMP E ORDER BY SAL DESC;
+-- 먼저 순서가 정해진후에 정렬, ROWNUM번호가 뒤죽박죽 함.
+SELECT ROWNUM, E.* FROM (SELECT * FROM EMP E ORDER BY SAL DESC) E;
+-- SAL 값으로 ROWNUM 번호를 조회, 순서대로 번호 정렬
+WITH E AS (SELECT * FROM EMP ORDER BY SAL DESC) SELECT ROWNUM, E.* FROM E;
+-- 위와 같은 내용 다른 문법. 
+SELECT ROWNUM, E.* FROM (SELECT * FROM EMP E ORDER BY SAL DESC) E WHERE ROWNUM <= 3;
+WITH E AS (SELECT * FROM EMP ORDER BY SAL DESC) SELECT ROWNUM, E.* FROM E WHERE ROWNUM <=3; 
+--WHERE문을 이용하여 조건을 달수도 있다
+```
