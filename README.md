@@ -816,3 +816,54 @@ check 설정한 조건을 만족하는 데이터만 입력 가능합니다.
 ** 개체 무결성- 테이블 데이터를 유일하게 식별할 수 있는 기본키는 반드시 값을 가지고 있어야 하고 not null이며 중복 될수 없다.
 ** 참조 무결성- 참조 테이블의 외래키 값은 참조 테이블의 기본키로서 존재해야하며 null이 가능.
 ```
+## 제약 조건 확인
+```SQL
+owner- 제약 조건 소유 계쩡
+constraint_name- 제약 조건 이름(지정 안할시 자동 설정됨)
+constraint_type- 제약 조건 종류
+               - c : check, not null
+               - u : unique
+               - p : primary key
+               - r r: foreign key
+table_name- 제약 조건을 지정한 테이블 이름
+
+select owner, constraint_name, constraint_type, table_name from user_constraints;
+--제약 조건 살펴 보기
+
+create table table_notnull(
+login_id varchar2(20) constraint tblnn2_lgnid0_nn not null,
+login_pwd varchar2(20) constraint tblnn2_lgnpwd0_nn not null,
+tel varchar2(20)
+);
+--테이블 생성
+
+INSERT INTO TABLE_NOTNULL(LOGIN_ID,LOGIN_PWD) VALUES('TEST_ID_01','1234');
+--열에 정보를 입력하고 TEL을 널로 설정
+
+UPDATE TABLE_NOTNULL
+SET TEL = '010-1234-5678'
+WHERE LOGIN_ID = 'TEST_ID_01';
+-- TEL에 전화번호 입력
+
+ALTER TABLE TABLE_NOTNULL
+MODIFY(TEL NOT NULL);
+--TEL열에 제약 조건 NOT NULL 설정
+
+ALTER TABLE TABLE_NOTNULL3
+MODIFY(TEL CONSTRAINT TBLNN_TEL_NN NOT NULL);
+--제약 조건에 이름을 지정해서 추가하기
+
+ALTER TABLE TABLE_NOTNULL3
+RENAME CONSTRAINT TBLNN_TEL_NN TO TBLNN2_TEL_NN;
+--생성된 제약조건 이름 변경
+
+ALTER TABLE TABLE_NOTNULL3
+DROP CONSTRAINT TBLNN2_TEL_NN;
+--제약 조건 삭제
+
+SELECT OWNER, CONSTRAINT_NAME, CONSTRAINT_TYPE, TABLE_NAME FROM USER_CONSTRAINTS;
+--제약 조건 확인
+DESC TABLE_NOTNULL3;
+--테이블 열 구조 확인하기
+SELECT * FROM TABLE_NOTNULL;
+```
