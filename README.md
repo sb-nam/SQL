@@ -1017,3 +1017,70 @@ INSERT INTO TABLE_DEFAULT VALUES('TEST_ID',NULL,'010-1234-5678');
 INSERT INTO TABLE_DEFAULT(LONGIN_ID,TEL) VALUES('TEST_ID2','010-1234-5678');
 SELECT * FROM TABLE_DEFAULT;
 ```
+
+## 사용자 관리
+```SQL
+사용자 관리는 한 사용자가 관리하기에는 데이터양이 너무 방대하거나
+구조가 복잡해지는 경우가 많다. 그래서 업무 분할과 효율, 보안을 고려하여 
+업무에 따라 여러 사용자를 나눈다.
+```
+** 사용자 생성
+```SQLS
+create user 사용자 이름(필수)
+identified by 패스워드(필수)
+default tablespace 테이블 스페이스 이름(선택)
+temporary tablespace 테이블 스페이스(그룹) 이름(선택)
+quota 테이블 스페이스크기 on 테이블 스페이스 이름(선택)
+profile 프로파일 이름(선택)
+password expire(선택)
+account [lock/unlock](선택);
+
+create user ORACLESTUDY
+identified by ORACLE;
+--계정 생성(권한이 있는 system 계정으로 해야한다)
+
+GRANT CREATE SESSION TO ORACLESTUDY;
+--권한 부여하기
+
+ALTER USER ORACLESTUDY
+IDENTIFIED BY ORCL;
+--사용자 비번 변경
+
+DROP USER ORACLESTUDY;
+--오라클 사용자 삭제(SYSTEM 계정에서 해야함)
+
+DROP USER ORACLESTUDY CASCADE;
+--사용자 삭제하면서 테이블도 모두 삭제
+```
+** 시스템 권한 부여
+```SQL
+GRANT[시스템 권한] TO [사용자 이름/롤(ROLE)이름/PUBLIC]
+[WITH ADMIN OPTION];
+
+GRANT RESOURCE, CREATE SESSION, CREATE TABLE TO ORACLESTUDY;
+
+ALTER USER ORACLESTUDY AUOTA 2M USERS;
+--용량 제한 명령어
+```
+** 시스템 권한 취소
+```SQL
+REVOKE[시스템 권한] FROM [사용자 이름/롤(ROLE)이름/PUBLIC];
+
+REVOKE RESOURCE, CREATE SESSION, CREATE TABLE TO ORACLESTUDY;
+```
+** 객체 권한 부여
+```SQL
+GRANT[객체권한/ALL PRIVILEGES]
+ON [스키마.객체 이름]
+TO [사용자 이름/롤(ROLE)이름/PUBLIC]
+[WITH GRANT OPTION];
+
+GRANT SELECT,INSERT ON TEMP TO ORACLESTUDY;
+```
+** 객체 권한 취소
+```SQL
+REVOKE [객체 권한/ALL PRIVILEGES](필수)
+ON[스키마.객체 이름](필수)
+FROM[사용자 이름/롤(ROLE)이름/PUBLIC](필수)
+[CASCADE CONSTRAINTS/FORCE](선택);
+```
