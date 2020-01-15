@@ -1084,3 +1084,29 @@ ON[스키마.객체 이름](필수)
 FROM[사용자 이름/롤(ROLE)이름/PUBLIC](필수)
 [CASCADE CONSTRAINTS/FORCE](선택);
 ```
+** ORACLESTUDY 사용자에게 TEMP 테이블 권한 부여하기
+```SQL
+CONN scott/tiger
+
+create table temp(
+col1 varchar(20),
+col2 varchar(20)
+);
+grant select, insert on temp to ORACLESTUDY;
+```
+** ORACLESTUDY로 TEMP테이블 사용하기
+```SQL
+CONN ORACLESTUDY/ORACLE
+
+SELECT * FROM SCOTT.TEMP;
+
+INSERT INTO SCOTT.TEMP VALUES('TEXT', 'FROM ORACLESTUDY');
+
+SELECT * FROM SCOTT.TEMP;
+```
+** 객체 권한 취소
+```SQL
+CONN scott/tiger
+
+REVOKE SELECT, INSERT ON TEMP FROM ORACLESTUDY;
+```
